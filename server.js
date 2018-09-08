@@ -4,9 +4,17 @@ const MongoClient    = require('mongodb').MongoClient;
 const bodyParser     = require('body-parser');
 const db             = require('./config/db');
 const app            = express();
-const port = 8000;
+const port           = 8000;
+
+// 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+})
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 MongoClient.connect(db.url, (err, database) => {
   if (err) return console.log(err)
@@ -15,5 +23,4 @@ MongoClient.connect(db.url, (err, database) => {
   app.listen(port, () => {
     console.log('We are live on ' + port);
   });               
-  
 })

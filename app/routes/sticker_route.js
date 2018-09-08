@@ -24,6 +24,7 @@ app.post('/collectible', (req, res) => {
         external_url: req.body.external_url,
         background_color: req.body.background_color
     };
+
     db.collection('collectible').insert(item, (err, result) => {
       if (err) { 
         res.send({ 'error': 'An error has occurred' }); 
